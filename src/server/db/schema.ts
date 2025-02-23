@@ -1,5 +1,6 @@
-import { index, singlestoreTableCreator } from "drizzle-orm/singlestore-core";
-import { bigint, text, int } from "drizzle-orm/singlestore-core";
+//import "server-only";
+
+import { bigint, index, int, singlestoreTableCreator, text } from "drizzle-orm/singlestore-core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -8,17 +9,17 @@ import { bigint, text, int } from "drizzle-orm/singlestore-core";
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const createTable = singlestoreTableCreator(
-  (name) => `drive_tutorial_${name}`,
+	(name) => `drive_tutorial_${name}`,
 );
 
 export const files = createTable(
-	"files_table", 
+	"files_table",
 	{
 		id: bigint({ mode: "number", unsigned: true }).primaryKey().autoincrement(),
 		name: text("name"),
 		size: int("size"),
 		url: text("url"),
-		parent: bigint("parent", { mode:"number", unsigned: true}),
+		parent: bigint("parent", { mode: "number", unsigned: true }),
 	}, (t) => {
 		return [index("parent_index").on(t.parent)];
 	},
@@ -26,11 +27,11 @@ export const files = createTable(
 
 
 export const folders = createTable(
-	"folder_table", 
+	"folders_table",
 	{
-		id: bigint({ mode:"number", unsigned: true}).primaryKey().autoincrement(),
+		id: bigint({ mode: "number", unsigned: true }).primaryKey().autoincrement(),
 		name: text("name"),
-		parent: bigint("parent", { mode:"number", unsigned: true}),
+		parent: bigint("parent", { mode: "number", unsigned: true }),
 	}, (t) => {
 		return [index("parent_index").on(t.parent)];
 	},
