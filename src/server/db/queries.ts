@@ -3,10 +3,9 @@ import "server-only";
 import { eq } from "drizzle-orm";
 import { db } from "~/server/db";
 import {
-	folders_table as foldersSchema,
 	files_table as filesSchema,
+	folders_table as foldersSchema,
 } from "~/server/db/schema";
-import { auth } from "@clerk/nextjs/server";
 
 export const QUERIES = {
 	getAllParentsForFolder: async function (folderId: number) {
@@ -31,14 +30,16 @@ export const QUERIES = {
 		return db
 			.select()
 			.from(foldersSchema)
-			.where(eq(foldersSchema.parent, folderId));
+			.where(eq(foldersSchema.parent, folderId))
+			.orderBy(foldersSchema.name);
 	},
 
 	getFiles: async function (folderId: number) {
 		return db
 			.select()
 			.from(filesSchema)
-			.where(eq(filesSchema.parent, folderId));
+			.where(eq(filesSchema.parent, folderId))
+			.orderBy(filesSchema.name);
 	},
 
 	getFolderById: async function (folderId: number) {
