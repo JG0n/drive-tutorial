@@ -32,6 +32,7 @@
 		"lucide-react": "^0.475.0",
 		"mysql2": "^3.12.0",
 		"next": "^15.1.7",
+		"posthog-js": "^1.229.5",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"tailwind-merge": "^3.0.2",
