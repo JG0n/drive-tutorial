@@ -1,12 +1,12 @@
 "use client";
 
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { UploadButton } from "@uploadthing/react";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { type files_table, type folders_table } from "~/server/db/schema";
 import { FileRow, FolderRow } from "./file-row";
 import { useRouter } from "next/navigation";
+import { UploadButton } from "src/components/uploadthing";
 
 export default function DriveContents(props: {
 	files: (typeof files_table.$inferSelect)[];
@@ -26,7 +26,7 @@ export default function DriveContents(props: {
 						>
 							My Drive
 						</Link>
-						{props.parents.map((folder, index) => (
+						{props.parents.map((folder) => (
 							<div key={folder.id} className="flex items-center">
 								<ChevronRight
 									className="mx-2 text-gray-500"
