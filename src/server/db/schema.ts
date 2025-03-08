@@ -1,11 +1,10 @@
-import "server-only";
-
 import {
 	bigint,
 	index,
 	int,
 	singlestoreTableCreator,
 	text,
+	timestamp,
 } from "drizzle-orm/singlestore-core";
 
 /**
@@ -24,13 +23,19 @@ export const files_table = createTable(
 		id: bigint({ mode: "number", unsigned: true })
 			.primaryKey()
 			.autoincrement(),
+		ownerId: text("owner_id").notNull(),
+
 		name: text("name"),
 		size: int("size"),
 		url: text("url").notNull(),
 		parent: bigint("parent", { mode: "number", unsigned: true }),
+		createdAt: timestamp("created_at").notNull().defaultNow(),
 	},
 	(t) => {
-		return [index("parent_index").on(t.parent)];
+		return [
+			index("parent_index").on(t.parent),
+			index("owner_id_index").on(t.ownerId),
+		];
 	},
 );
 
@@ -42,11 +47,17 @@ export const folders_table = createTable(
 		id: bigint({ mode: "number", unsigned: true })
 			.primaryKey()
 			.autoincrement(),
+		ownerId: text("owner_id").notNull(),
+
 		name: text("name"),
 		parent: bigint("parent", { mode: "number", unsigned: true }),
+		createdAt: timestamp("created_at").notNull().defaultNow(),
 	},
 	(t) => {
-		return [index("parent_index").on(t.parent)];
+		return [
+			index("parent_index").on(t.parent),
+			index("owner_id_index").on(t.ownerId),
+		];
 	},
 );
 
